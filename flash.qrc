@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>flash/2.gif</file>
+        <file>flash/5.gif</file>
+        <file>flash/4.gif</file>
+        <file>flash/3.gif</file>
+        <file>flash/1.gif</file>
+    </qresource>
+</RCC>
