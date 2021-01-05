@@ -27,7 +27,7 @@ Window {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 80
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 60
+            spacing: 50
             enabled: video.playbackState != MediaPlayer.PlayingState
 
             // 播放视频
@@ -43,19 +43,7 @@ Window {
                 }
             }
 
-            // 节目单
-            Image {
-                source: "qrc:/image/program.png"
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                    }
-                }
-            }
-
-            // 游戏
+            // 穿裤子
             Image {
                 source: "qrc:/image/activity.png"
 
@@ -63,6 +51,33 @@ Window {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
+                        wearPant.visible = true
+                    }
+                }
+            }
+
+            // 蒙眼喂食
+            Image {
+                source: "qrc:/image/banana.png"
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        blindfoldFeeding.visible = true
+                    }
+                }
+            }
+
+            // 看图猜成语
+            Image {
+                source: "qrc:/image/picture.png"
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        guessIdiom.visible = true
                     }
                 }
             }
@@ -94,6 +109,17 @@ Window {
             source: video
             visible: video.playbackState == MediaPlayer.PlayingState
         }
+
+        //------------------------------------------------------------
+
+        // 穿裤子
+        WearPant { id: wearPant }
+
+        // 蒙眼喂食
+        BlindfoldFeeding { id: blindfoldFeeding }
+
+        // 看图猜成语
+        GuessIdiom { id: guessIdiom }
 
         //------------------------------------------------------------
 

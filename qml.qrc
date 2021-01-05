@@ -4,5 +4,8 @@
         <file>content/LotteryDraw.qml</file>
         <file>content/TextDisplay.qml</file>
         <file>content/FlashDisplay.qml</file>
+        <file>content/WearPant.qml</file>
+        <file>content/BlindfoldFeeding.qml</file>
+        <file>content/GuessIdiom.qml</file>
     </qresource>
 </RCC>

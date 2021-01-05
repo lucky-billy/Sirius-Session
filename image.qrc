@@ -12,7 +12,11 @@
         <file>image/award-3.png</file>
         <file>image/background.jpg</file>
         <file>image/activity.png</file>
-        <file>image/program.png</file>
         <file>image/video.png</file>
+        <file>image/banana.png</file>
+        <file>image/picture.png</file>
+        <file>image/game1-1.jpg</file>
+        <file>image/game1-2.jpg</file>
+        <file>image/game2.png</file>
     </qresource>
 </RCC>
