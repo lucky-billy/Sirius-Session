@@ -22,6 +22,14 @@ Window {
         Keys.onEnterPressed: { console.log("111") }
         Keys.onReturnPressed: { console.log("222") }
 
+        // 公司名称
+        Image {
+            anchors.top: parent.top
+            anchors.topMargin: 40
+            anchors.horizontalCenter: parent.horizontalCenter
+            source: "qrc:/image/companyName.png"
+        }
+
         // 按钮
         Row {
             anchors.bottom: parent.bottom

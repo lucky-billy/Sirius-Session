@@ -220,5 +220,6 @@
         <file>image/guessIdiom/200.png</file>
         <file>image/guessIdiom/example-1.png</file>
         <file>image/guessIdiom/example-2.png</file>
+        <file>image/companyName.png</file>
     </qresource>
 </RCC>
