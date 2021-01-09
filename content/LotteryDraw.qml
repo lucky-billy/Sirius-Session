@@ -1,13 +1,27 @@
 import QtQuick 2.0
 import QtQuick.Dialogs 1.3
+import QtMultimedia 5.12
 
 Dialog {
     width: 1024; height: 768
+    title: "抽奖"
     visible: false
 
     property int totalIndex: 0
+    property bool cheat: false
+
+    onVisibleChanged: {
+        if ( luckDraw.playbackState == MediaPlayer.PlayingState ) {
+            luckDraw.stop()
+        }
+    }
 
     contentItem: Rectangle {
+        focus: true
+        Keys.enabled: true
+        Keys.onUpPressed: { if ( currentVolume < 1 ) { currentVolume += 0.05 } }
+        Keys.onDownPressed: { if ( currentVolume > 0.1 ) { currentVolume -= 0.05 } }
+
         // 颁奖台
         Rectangle {
             width: 960; height: 200
@@ -247,6 +261,7 @@ Dialog {
                 ListElement { myState: false; myAnimation: false; myName: "刘勤"; }
                 ListElement { myState: false; myAnimation: false; myName: "郭可"; }
                 ListElement { myState: false; myAnimation: false; myName: "罗金川"; }
+                ListElement { myState: false; myAnimation: false; myName: "林丽珍"; }
             }
 
             highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
@@ -347,25 +362,60 @@ Dialog {
                         timer.stop()
                         button.enabled = false
 
-                        // 最后9人不能参与抽奖
-                        if ( timer.index > view.model.count - 10 ) {
+                        // 最后10人不能参与抽奖
+                        if ( timer.index > view.model.count - 11 ) {
                             view.model.setProperty(timer.index, "myState", false)
                             timer.index = timer.getRandomNum(0, view.model.count - 10)
                             view.model.setProperty(timer.index, "myState", true)
                         }
 
                         // 作弊
-//                        if ( totalIndex === 15 ) {
-//                            view.model.setProperty(timer.index, "myState", false)
-//                            for ( var i = 0; i < view.model.count; ++i )
-//                            {
-//                                if ( view.model.get(i).myName === "闵文定" ) {
-//                                    timer.index = i
-//                                    break
-//                                }
-//                            }
-//                            view.model.setProperty(timer.index, "myState", true)
-//                        }
+                        if ( cheat ) {
+                            if ( totalIndex === 7 ) {
+                                view.model.setProperty(timer.index, "myState", false)
+                                for ( var i = 0; i < view.model.count; ++i )
+                                {
+                                    if ( view.model.get(i).myName === "闵文定" ) {
+                                        timer.index = i
+                                        break
+                                    }
+                                }
+                                view.model.setProperty(timer.index, "myState", true)
+                            }
+                            if ( totalIndex === 8 ) {
+                                view.model.setProperty(timer.index, "myState", false)
+                                for ( i = 0; i < view.model.count; ++i )
+                                {
+                                    if ( view.model.get(i).myName === "缪婷婷" ) {
+                                        timer.index = i
+                                        break
+                                    }
+                                }
+                                view.model.setProperty(timer.index, "myState", true)
+                            }
+                            if ( totalIndex === 13 ) {
+                                view.model.setProperty(timer.index, "myState", false)
+                                for ( i = 0; i < view.model.count; ++i )
+                                {
+                                    if ( view.model.get(i).myName === "沈心晨" ) {
+                                        timer.index = i
+                                        break
+                                    }
+                                }
+                                view.model.setProperty(timer.index, "myState", true)
+                            }
+                            if ( totalIndex === 14 ) {
+                                view.model.setProperty(timer.index, "myState", false)
+                                for ( i = 0; i < view.model.count; ++i )
+                                {
+                                    if ( view.model.get(i).myName === "曹佳佳" ) {
+                                        timer.index = i
+                                        break
+                                    }
+                                }
+                                view.model.setProperty(timer.index, "myState", true)
+                            }
+                        }
 
                         // 开启文字特效
                         view.model.setProperty(timer.index, "myAnimation", true)
@@ -377,7 +427,7 @@ Dialog {
             }
         }
 
-        // 定时器
+        // 定时器生成随机数，刷新中奖人员
         Timer {
             id: timer
             interval: 20
@@ -400,7 +450,7 @@ Dialog {
             }
         }
 
-        // 更新
+        // 抽奖完成，显示 + 更新
         Timer {
             id: update
             interval: 1800
@@ -428,9 +478,6 @@ Dialog {
                 case 16: first_award.name2 = view.model.get(timer.index).myName; break;
                 default: break;
                 }
-
-                // 音效
-                music.play()
 
                 // 动画
                 flashDisplay.flashSource = ""
@@ -466,6 +513,35 @@ Dialog {
                 // 继续抽奖
                 button.condition = !button.condition
                 button.enabled = true
+            }
+        }
+
+        // 抽奖动画
+        FlashDisplay { id: flashDisplay }
+
+        // 抽奖文本
+        TextDisplay { id: textDisplay }
+
+        // 播放背景音乐
+        Image {
+            width: 32; height: 32
+            anchors.left: parent.left
+            anchors.leftMargin: 2
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 2
+            source: luckDraw.playbackState == MediaPlayer.PlayingState ? "qrc:/image/mute.png"
+                                                                       : "qrc:/image/horn.png"
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    if ( luckDraw.playbackState == MediaPlayer.PlayingState ) {
+                        luckDraw.stop()
+                    } else {
+                        luckDraw.play()
+                    }
+                }
             }
         }
     }

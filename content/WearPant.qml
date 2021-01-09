@@ -1,11 +1,24 @@
 import QtQuick 2.0
 import QtQuick.Dialogs 1.3
+import QtMultimedia 5.12
 
 Dialog {
     width: 1024; height: 768
+    title: "徒手穿裤子"
     visible: false
 
+    onVisibleChanged: {
+        if ( game.playbackState == MediaPlayer.PlayingState ) {
+            game.stop()
+        }
+    }
+
     contentItem: Rectangle {
+        focus: true
+        Keys.enabled: true
+        Keys.onUpPressed: { if ( currentVolume < 1 ) { currentVolume += 0.05 } }
+        Keys.onDownPressed: { if ( currentVolume > 0.1 ) { currentVolume -= 0.05 } }
+
         // 标题
         Text {
             anchors.top: parent.top
@@ -51,6 +64,29 @@ Dialog {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             source: "qrc:/image/game1-2.jpg"
+        }
+
+        // 播放背景音乐
+        Image {
+            width: 32; height: 32
+            anchors.left: parent.left
+            anchors.leftMargin: 2
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 2
+            source: game.playbackState == MediaPlayer.PlayingState ? "qrc:/image/mute.png"
+                                                                   : "qrc:/image/horn.png"
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: {
+                    if ( game.playbackState == MediaPlayer.PlayingState ) {
+                        game.stop()
+                    } else {
+                        game.play()
+                    }
+                }
+            }
         }
     }
 }
