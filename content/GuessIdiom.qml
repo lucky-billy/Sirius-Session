@@ -76,7 +76,7 @@ Dialog {
                 anchors.left: parent.left
                 anchors.leftMargin: 150
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 260
+                anchors.bottomMargin: 240
                 source: "qrc:/image/guessIdiom/example-1.png"
             }
 
@@ -96,9 +96,9 @@ Dialog {
                 id: example2
                 width: 360; height: 250
                 anchors.right: parent.right
-                anchors.rightMargin: 150
+                anchors.rightMargin: 120
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 260
+                anchors.bottomMargin: 240
                 source: "qrc:/image/guessIdiom/example-2.png"
             }
 
@@ -214,7 +214,7 @@ Dialog {
 
             Image {
                 id: image
-                width: 350; height: 350
+                width: 400; height: 400
                 anchors.top: parent.top
                 anchors.topMargin: 100
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -222,16 +222,30 @@ Dialog {
             }
 
             Text {
+                id: text
                 anchors.top: image.bottom
                 anchors.topMargin: 50
                 anchors.horizontalCenter: image.horizontalCenter
                 font.family: "微软雅黑"
-                font.pixelSize: 60
+                font.pixelSize: 70
                 font.bold: true
                 color: "#CC6600"
                 text: pathModel.get(currentIndex).imageName
                 visible: pathModel.get(currentIndex).myState
             }
+
+//            SequentialAnimation {
+//                running: pathModel.get(currentIndex).myState
+
+//                PropertyAnimation {
+//                    target: text;
+//                    property: "scale";
+//                    easing.type: Easing.InOutQuad
+//                    from: 3
+//                    to: 1;
+//                    duration: 300
+//                }
+//            }
         }
 
         // 播放背景音乐
